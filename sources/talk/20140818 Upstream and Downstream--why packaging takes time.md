@@ -1,16 +1,14 @@
-[felixonmars translating...]
-
-Upstream and Downstream: why packaging takes time
+上游和下游：为什么打包是个耗时的事儿
 ================================================================================
-Here in the KDE office in Barcelona some people spend their time on purely upstream KDE projects and some of us are primarily interested in making distros work which mean our users can get all the stuff we make. I've been asked why we don't just automate the packaging and go and do more productive things. One view of making on a distro like Kubuntu is that its just a way to package up the hard work done by others to take all the credit. I don't deny that, but there's quite a lot to the packaging of all that hard work, for a start there's a lot of it these days.
+这里是巴塞罗那的 KDE 办公室，一些人的时间主要花在纯粹的上游 KDE 项目中，而另一些人则对让发行版工作更感兴趣，因为这意味着我们的用户能够获得我们编写的所有东西。有人问我为什么我们不能把打包的过程自动化，这样可以做些更有建设性的事情。从某个角度来看，制作一个 Kubuntu 这样的发行版只是把别人的辛苦成果拿来打个包，然后获得所有的感谢。我不否认这一点，但是目前的打包过程中也还是有很多事情要做的。
 
-"KDE" used to be released once every nine months or less frequently. But yesterday I released the [first bugfix update to Plasma][1], to make that happen I spent some time on Thursday with David making the [first update to Frameworks 5][2]. But Plasma 5 is still a work in progress for us distros, let's not forget about [KDE SC 4.13.3][3] which Philip has done his usual spectacular job of updating in the 14.04 LTS archive or [KDE SC 4.14 betas][4] which Scarlett has been packaging for utopic and backporting to 14.04 LTS. KDE SC used to be 20 tars, now it's 169 and over 50 langauge packs. 
+“KDE”一般每 9 个月更新一次，或更少。不过昨天我发布了[第一个 Plasma 的错误修复更新][1]，为了让它成为现实，我星期四和 David 花了一些时间来发布[Frameworks 5 的第一个更新][2]。但是 Plasma 5 对我们发行版来说仍然是一个正在完善中的产品，别忘记 Philip 日常的壮观工作：在 14.04 LTS 仓库更新 [KDE SC 4.13.3][3]，或者 Scarlett 已经为 utopic 打包，并反向移植到 14.04 LTS 的 [KDE SC 4.14 beta 版本][4]。KDE SC 本来只有 20 个 tar 文件，现在它有 169 个包了，还有超过 50 个语言包。
 
-### Patches ###
+### 补丁 ###
 
-If we were packaging it without any automation as used to be done it would take an age but of course we do automate the repetative tasks, the [KDE SC 4.13.97 status][5] page shows all the packages and highlights obvious problems. But with 169 tars even running the automated script takes a while, then you have to fix any patches that no longer apply. We have [policies][6] to disuade having patches, any patches should be upstream in KDE or on their way upstream, but sometimes it's unavoidable that we have some to maintain which often need small changes for each upstream release.
+如果你的打包过程中没有采用任何自动化，这件事情将花费难以想象长的时间。不过，显然我们把可以重复的任务给自动化了。[KDE SC 4.13.97 状态][5]页面显示了所有的软件包，并且将明显的问题高亮标出。不过面对着 169 个包，即使运行自动化的脚本也是要花些时间的，而且你还需要修复不再能够应用得上的补丁。我们有一些[规则][6]来限定补丁的范围，任何补丁都应该被 KDE 上游采纳，或者正在被上游采纳的路上。然而经常地对每个上游版本维护一些小修改也是不可避免的。
 
-### Symbols ###
+### 符号 ###
 
 Much of what we package are libraries and if one small bit changes in the library, any applications which use that library will crash. This is ABI and the rules for [binary compatibility][7] in C++ are nuts. Not infrequently someone in KDE will alter a library ABI without realising. So we maintain symbol files to list all the symbols, these can often feel like more trouble than they're worth because they need updated when a new version of GCC produces different symbols or when symbols disappear and on investigation they turn out to be marked private and nobody will be using them anyway, but if you miss a change and apps start crashing as nearly happened in KDE PIM last week then people get grumpy.
 
@@ -79,7 +77,7 @@ I'd welcome comments on how any workflow here can be improved or how it compares
 via: https://blogs.kde.org/2014/08/13/upstream-and-downstream-why-packaging-takes-time
 
 作者：[Jonathan Riddell][a]
-译者：[译者ID](https://github.com/译者ID)
+译者：[felixonmars](https://github.com/felixonmars)
 校对：[校对者ID](https://github.com/校对者ID)
 
 本文由 [LCTT](https://github.com/LCTT/TranslateProject) 原创翻译，[Linux中国](http://linux.cn/) 荣誉推出
