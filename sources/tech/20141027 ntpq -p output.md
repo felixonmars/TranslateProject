@@ -1,12 +1,12 @@
 [felixonmars translating...]
 
-“ntpq -p” output
+“ntpd -p” 的输出结果
 ================================================================================
-The [Gentoo][1] (and others?) [incomplete man pages for “ntpq -p”][2] merely give the description: “*Print a list of the peers known to the server as well as a summary of their state.*”
+[Gentoo][1]（以及其他？）[不完整的“ntpq -p”手册页][2]仅仅给了这样的解释：“*输出服务器知道的节点列表，以及它们状态的摘要。*”
 
-I had not seen this documented, hence here is a summary that can be used in addition to the brief version of the man page “[man ntpq][3]“. More complete details are given on: “[ntpq – standard NTP query program][4]” (source author), and [other examples of the man ntpq pages][5].
+我没有见过有文档记录过这些，因此这篇文章将提供一个摘要，来作为简短的“[man ntpq][3]”手册页的补充。更全面的细节在“[ntpq——标准 NTP 查询程序][4]”和[其他 ntpq 手册页的例子][5]里有提供。
 
-[NTP][6] is a protocol designed to synchronize the clocks of computers over a ([WAN][7] or [LAN][8]) [udp][9] network. From [Wikipedia – NTP][10]:
+[NTP][6] 是一个为通过（[WAN][7] 或 [LAN][8] 的）[udp][9] 网络更新计算机间的时钟而设计的协议。参考[维基百科——NTP][10]：
 
 > The Network Time Protocol (NTP) is a protocol and software implementation for synchronizing the clocks of computer systems over packet-switched, variable-latency data networks. Originally designed by David L. Mills of the University of Delaware and still maintained by him and a team of volunteers, it was first used before 1985 and is one of the oldest Internet protocols.
 
