@@ -1,5 +1,3 @@
-[felixonmars translating...]
-
 “ntpd -p” 的输出结果
 ================================================================================
 [Gentoo][1]（以及其他？）[不完整的“ntpq -p”手册页][2]仅仅给了这样的解释：“*输出服务器知道的节点列表，以及它们状态的摘要。*”
@@ -8,36 +6,37 @@
 
 [NTP][6] 是一个为通过（[WAN][7] 或 [LAN][8] 的）[udp][9] 网络更新计算机间的时钟而设计的协议。参考[维基百科——NTP][10]：
 
-> The Network Time Protocol (NTP) is a protocol and software implementation for synchronizing the clocks of computer systems over packet-switched, variable-latency data networks. Originally designed by David L. Mills of the University of Delaware and still maintained by him and a team of volunteers, it was first used before 1985 and is one of the oldest Internet protocols.
+> 网络时间协议（NTP）是一个协议和软件实现，它用于在可变延迟的数据网络中通过数据包交换来同步计算机系统的时钟。它原先由特拉华大学的 David L. Mills 设计，并仍由他和一群志愿者维护。它最早在 1985 年之前投入使用，是最古老的互联网协议之一。
 
-For an awful lot more than you might ever want to know about time and NTP, see “[The NTP FAQ, Time, what Time?][11]” and the current [RFCs for NTP][12]. The earlier “Network Time Protocol (Version 3) RFC” ([txt][13], or [pdf][14], Appendix E, The NTP Timescale and its Chronometry, p70) includes an interesting explanation of the changes in, and relations between, our timekeeping systems over the past 5000 years or so. Wikipedia gives a broader view in the articles [Time][15] and [Calendar][16].
+Wikipedia gives a broader view in the articles [Time][15] and [Calendar][16].
+想要了解有关时钟和 NTP 的知识，可能这些比你想要知道得要多得多：“The NTP FAQ, Time, what Time?][11]”以及现在的 [NTP 标准][12]。较早的“网络时间协议（第三版）标准”（[文本][13]，或 [PDF][14]，附录 E，NTP 时序表和计时法，第 70 页）包括一些有趣的解释，包括过去 5000 年来我们计时系统的演变及它们之间的关系。维基百科在这些文章中提供了一个更广的视野：[Time][15] 和 [Calendar][16]。
 
-The command “ntpq -p” outputs a table such as for example:
+命令“ntpq -p”输出了一个这样的表格：
 
          remote           refid      st t when poll reach   delay   offset  jitter
     ==============================================================================
      LOCAL(0)        .LOCL.          10 l  96h   64    0    0.000    0.000   0.000
     *ns2.example.com 10.193.2.20      2 u  936 1024  377   31.234    3.353   3.096
 
-### Further detail: ###
+### 进一步的解释 ###
 
-#### Table headings: ####
+#### 表格标题 ####
 
 
-- **remote** – The remote peer or server being synced to. “LOCAL” is this local host (included in case there are no remote peers or servers available);
-- **refid** – Where or what the remote peer or server is itself synchronised to;
-- **st** – The remote peer or server [Stratum][17]
-- **t** – Type (u: [unicast][18] or [manycast][19] client, b: [broadcast][20] or [multicast][21] client, l: local reference clock, s: symmetric peer, A: manycast server, B: broadcast server, M: multicast server, see “[Automatic Server Discovery][22]“);
-- **when** – When last polled (seconds ago, “h” hours ago, or “d” days ago);
-- **poll** – Polling frequency: [rfc5905][23] suggests this ranges in NTPv4 from 4 (16s) to 17 (36h) (log2 seconds), however observation suggests the actual displayed value is seconds for a much smaller range of 64 (26) to 1024 (210) seconds;
-- **reach** – An 8-bit left-shift shift register value recording polls (bit set = successful, bit reset = fail) displayed in [octal][24];
-- **delay** – Round trip communication delay to the remote peer or server (milliseconds);
-- **offset** – Mean offset (phase) in the times reported between this local host and the remote peer or server ([RMS][25], milliseconds);
-- **jitter** – Mean deviation (jitter) in the time reported for that remote peer or server (RMS of difference of multiple time samples, milliseconds);
+- **remote** —— 用于同步的远程节点或服务器。“LOCAL”表示本机（为以防没有可用的远程节点或服务器而包括在内）；
+- **refid** —— 远程节点或服务器本身用于同步的目标；
+- **st** —— 远程节点或服务器的[层级][17]
+- **t** —— 类型（u：[单播][18]或[多播][19]客户端，b：[广播][20]或[组播][21]客户端，l：本地参考时钟，s：对称节点，A：多播服务器，B：广播服务器，M：组播服务器，参考“[自动服务器发现][22]”）；
+- **when** —— 最近一次轮询的时间（默认单位为秒，“h”表示几小时前，或“d”表示几天前）；
+- **poll** —— 轮询间隔：[rfc5905][23] 规定在 NTPv4 中这个范围为 4（16秒）到 17（36 小时）之间（log2 秒），然而观察发现实际显示的值在一个小得多的范围内：64（26）到 1024（210）秒；
+- **reach** —— 一个八位左移的位移寄存器值，记录轮询的结果（位设置 = 成功，位置空 = 失败），以[八进制][24]显示；
+- **delay** —— 到远程节点或服务器的往返通信延迟（毫秒）；
+- **offset** —— 本机和远程节点或服务器报告的时间的平均偏移（相位）（[均方根][25]，毫秒）；
+- **jitter** —— 本机和远程节点或服务器报告的时间的平均误差（抖动）（多次时间采样区别的均方根，毫秒）；
 
-#### Select Field tally code: ####
+#### 选择列的标签代码 ####
 
-The first character displayed in the table (Select Field tally code) is a state flag (see [Peer Status Word][26]) that follows the sequence ” “, “x”, “-“, “#”, “+”, “*”, “o”:
+在表格中显示的第一个字符（选择列的标签代码）是一个状态标记（参考[节点状态标志][26]），按照顺序依次是“ ”、“x”、“-”、“#”、“+”、“*”、“o”：
 
 
 - ”** **” – No state indicated for:
